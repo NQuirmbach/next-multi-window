@@ -1,24 +1,22 @@
 import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Popup, useWindowState } from "../contexts/window-state";
 
-type Props = {
+type Props = Popup & {
   title: string;
-  Component: any;
-  props?: any;
+  children: React.ReactNode;
 };
-export const PopoutContainer = ({ Component, title, props }: Props) => {
+export const PopoutContainer = ({ children, title, ...popup }: Props) => {
+  const { addPopup } = useWindowState();
+
   const openInWindow = () => {
     if (typeof window === undefined) return;
 
-    console.debug(Component);
+    let uri = `/popup/${popup.popupKey}`;
+    addPopup(popup);
 
-    let uri = `/popup/${Component.name}`;
-    if (props) {
-      uri += `?props=${JSON.stringify(props)}`;
-    }
-
-    window.open(uri, "_blank", "toolbar=0,location=0,menubar=0");
+    window.open(uri, "_blank", "toolbar=0");
   };
 
   return (
@@ -31,7 +29,7 @@ export const PopoutContainer = ({ Component, title, props }: Props) => {
           className="h-4 cursor-pointer opacity-80 hover:opacity-100 hover:scale-110 transition-all"
         />
       </div>
-      <div className="p-2 h-60">{React.createElement(Component, props)}</div>
+      <div className="p-2 h-60">{children}</div>
     </div>
   );
 };

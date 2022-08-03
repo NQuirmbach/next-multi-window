@@ -10,11 +10,20 @@ const Home: NextPage = () => {
       <div className="container mx-auto flex gap-4 py-4">
         <PopoutContainer
           title="Komponente 1"
-          Component={Component1}
-          props={{ value: "Test123" }}
-        />
+          popupKey="component1"
+          componentPath="Component1"
+          props={{ value: "Test 123 " }}
+        >
+          <Component1 value="Test 123" />
+        </PopoutContainer>
 
-        <PopoutContainer title="Komponente 2" Component={Component2} />
+        <PopoutContainer
+          title="Komponente 2"
+          popupKey="component2"
+          componentPath="Component2"
+        >
+          <Component2 />
+        </PopoutContainer>
       </div>
     </Layout>
   );
