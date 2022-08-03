@@ -5,10 +5,16 @@ import { Popup, useWindowState } from "../contexts/window-state";
 
 type Props = Popup & {
   title: string;
+  hideOnPopup?: boolean;
   children: React.ReactNode;
 };
-export const PopoutContainer = ({ children, title, ...popup }: Props) => {
-  const { addPopup } = useWindowState();
+export const PopoutContainer = ({
+  children,
+  title,
+  hideOnPopup = false,
+  ...popup
+}: Props) => {
+  const { addPopup, isPopedOut } = useWindowState();
 
   const openInWindow = () => {
     if (typeof window === undefined) return;
@@ -18,6 +24,8 @@ export const PopoutContainer = ({ children, title, ...popup }: Props) => {
 
     window.open(uri, "_blank", "toolbar=0");
   };
+
+  if (hideOnPopup && isPopedOut(popup.popupKey)) return null;
 
   return (
     <div className="flex-1 border border-gray-200 rounded-sm">

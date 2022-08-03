@@ -13,6 +13,7 @@ const Home: NextPage = () => {
           popupKey="component1"
           componentPath="Component1"
           props={{ value: "Test 123 " }}
+          hideOnPopup
         >
           <Component1 value="Test 123" />
         </PopoutContainer>

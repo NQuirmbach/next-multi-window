@@ -5,6 +5,7 @@ const defaultValue: WindowStateContext = {
   popups: [],
   addPopup: () => {},
   removePopup: () => {},
+  isPopedOut: () => false,
 };
 
 export const Context = React.createContext(defaultValue);

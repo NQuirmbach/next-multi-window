@@ -47,6 +47,8 @@ export function WindowStateProvider({ children, windowType }: ProviderProps) {
     const state = e.newValue ? JSON.parse(e.newValue) : [];
     setPopups(state);
   };
+  const isPopedOut = (key: string) =>
+    popups.findIndex((m) => m.popupKey === key) >= 0;
 
   useEffect(() => {
     if (typeof window === undefined || windowType === "main") return;
@@ -71,6 +73,11 @@ export function WindowStateProvider({ children, windowType }: ProviderProps) {
     return () => window.removeEventListener("storage", storageChange);
   }, []);
 
-  const value: WindowStateContext = { popups, addPopup, removePopup };
+  const value: WindowStateContext = {
+    popups,
+    addPopup,
+    removePopup,
+    isPopedOut,
+  };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
